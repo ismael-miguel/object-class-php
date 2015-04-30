@@ -81,3 +81,11 @@ Example of usage and showcasing some features:
 
 - PHP 5.3 (to use with closures)
 - function `trigger_error` must be enabled (logging isn't required)
+
+##Methods
+
+Full list of methods:
+
+- `Object::keys( Object )`<br>
+  Expects an element of type `Object`.<br>
+  Returns an array with all the keys, or an empty array, running `array_keys` when appropriate.
