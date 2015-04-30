@@ -52,11 +52,11 @@ Example of usage and showcasing some features:
 				echo 'checking key: ', $k, PHP_EOL;
 				return isset($t->{$k});
 			},
-			'test'=>5,
 			'__toString'=>function(){
 				echo 'converting to string: ', PHP_EOL;
 				return 'string';
 			},
+			'test'=>5
 		));
 	
 		if( isset($obj->test) )
