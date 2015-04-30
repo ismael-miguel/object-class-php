@@ -44,38 +44,38 @@ This is due to the limitation of the language itself, which doesn't allow to dyn
 
 Example of usage and showcasing some features:
 
-<?php
+	<?php
 
-	$obj = new Object(array(
-		'__construct'=>function(){echo 'constructor executed', PHP_EOL;},
-		'__isset'=>function($t,$k){
-			echo 'checking key: ', $k, PHP_EOL;
-			return isset($t->{$k});
-		},
-		'test'=>5,
-		'__toString'=>function(){
-			echo 'converting to string: ', PHP_EOL;
-			return 'string';
-		},
-	));
-
-	if( isset($obj->test) )
-	{
-		echo $obj->test;
-	}
-
-	echo PHP_EOL, $obj, PHP_EOL;
+		$obj = new Object(array(
+			'__construct'=>function(){echo 'constructor executed', PHP_EOL;},
+			'__isset'=>function($t,$k){
+				echo 'checking key: ', $k, PHP_EOL;
+				return isset($t->{$k});
+			},
+			'test'=>5,
+			'__toString'=>function(){
+				echo 'converting to string: ', PHP_EOL;
+				return 'string';
+			},
+		));
 	
-	/*
-		Expected output:
+		if( isset($obj->test) )
+		{
+			echo $obj->test;
+		}
+	
+		echo PHP_EOL, $obj, PHP_EOL;
 		
-		constructor executed
-		checking key: test
-		5
-		converting to string: 
-		string
-		
-	*/
+		/*
+			Expected output:
+			
+			constructor executed
+			checking key: test
+			5
+			converting to string: 
+			string
+			
+		*/
 
 ##Requirements
 
