@@ -38,7 +38,9 @@ Support for more may be added.
 The supported magic methods will be kept in a different space than all the other properties.
 
 The magic methods are in everything equal to the original methods, but the first argument is an `object` with all the properties.<br>
-This is due to the limitation of the language itself, which doesn't allow to dynamically set the variable `$this`.
+This is due to the limitation of the language itself, which doesn't allow to dynamically set the variable `$this`.<br>
+This is only true for when you pass a function name or when you use `create_function` as a magic method.<br>
+Usage of the `$this` variable is allowed and has an extended access to the properties and methods.
 
 ##Usage
 
@@ -48,10 +50,11 @@ Example of usage and showcasing some features:
 
 		$obj = new Object(array(
 			'__construct'=>function(){echo 'constructor executed', PHP_EOL;},
-			'__isset'=>function($t,$k){
+			'__isset'=>function($k){
 				echo 'checking key: ', $k, PHP_EOL;
-				return isset($t->{$k});
+				return isset($this->props[$k]);//must use the array `props`
 			},
+			'__unset'=>create_function('$t,$k','unset($t->{$k});')//'classic' way
 			'__toString'=>function(){
 				echo 'converting to string: ', PHP_EOL;
 				return 'string';
