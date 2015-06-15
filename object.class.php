@@ -12,17 +12,20 @@
 		);
 		private function _run_magic_method( $method, $args=null )
 		{
+			$obj = (object)$this->props;
+			
 			if( is_a( $this->methods[$method], 'Closure' ) )
 			{
-				return call_user_func_array($this->methods[$method], (array)$args );
+				//Inside the closure, the $this will be changing the parent $this->props
+				$return = call_user_func_array( $this->methods[$method]->bindTo( $obj ), (array)$args );
 			}
 			else
 			{
-				$obj = (object)$this->props;
-				$return = call_user_func_array( $this->methods[$method], array_merge( array(&$obj), (array)$args ) );
-				$this->props = (array)$obj;
-				return $return;
+				$return = call_user_func_array( $this->methods[$method], array_merge( array( &$obj ), (array)$args ) );
 			}
+			
+			$this->props = (array)$obj;
+			return $return;
 		}
 		private function _has_magic_method( $method )
 		{
@@ -34,14 +37,7 @@
 			{
 				if( isset( $props[$method] ) )
 				{
-					if( is_a( $props[$method], 'Closure' ) )
-					{
-						$this->methods[$method] = $props[$method]->bindTo( $this, $this );
-					}
-					else
-					{
-						$this->methods[$method] = $props[$method];
-					}
+					$this->methods[$method] = $props[$method];
 					unset( $props[$method] );
 				}
 			}
